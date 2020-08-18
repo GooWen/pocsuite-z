@@ -33,6 +33,7 @@ It comes with a powerful proof-of-concept engine, many powerful features for the
 * Integrate with Fofa (for load target from Fofa `Dork`)
 * Friendly debug PoC scripts with IDEs
 * Integrate with [Google](https://www.google.com) (for load target from Google `Dork`)
+* Add PoCs from [some_pocsuite](https://github.com/hanc00l/some_pocsuite)
 * More ...
 
 ## Screenshots
