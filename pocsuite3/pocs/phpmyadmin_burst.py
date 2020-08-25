@@ -35,7 +35,7 @@ class PmaBurstPOC(POCBase):
     install_requires = ['']
     category = POC_CATEGORY.TOOLS.CRACK
 
-    def pma_login(url, username, password):
+    def pma_login(self, url, username, password):
         for i in range(3):
             try:
                 res = requests.get(url)
@@ -53,7 +53,7 @@ class PmaBurstPOC(POCBase):
                 pass
         return False
 
-    def get_word_list():
+    def get_word_list(self):
         common_username = ('root', 'guest', 'admin', 'pma')
         common_password = ('root', 'guest', 'admin', '', 'pma',
                            'toor', '123456', '12345678', '12345')
