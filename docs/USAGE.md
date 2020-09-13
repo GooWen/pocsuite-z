@@ -1,16 +1,16 @@
 # Usage
 
-- **pocsuite**: a cool and hackable commane line program
+-   **pocsuite**: a cool and hackable commane line program
 
 ## pocsuite
 
 Enter into `pocsuite` directory, execute `python cli.py`. It supports double mode:
 
- - ```verify```
- - ```attack```
- - ```shell```
+-   `verify`
+-   `attack`
+-   `shell`
 
-You can also use ```python cli.py -h``` for more details.
+You can also use `python cli.py -h` for more details.
 
 ```
 usage: pocsuite [options]
@@ -67,6 +67,8 @@ Account:
                         fofa user
   --fofa-token FOFA_TOKEN
                         fofa token
+  --fofa-cookie FOFA_COOKIE
+                        fofac cookie
   --censys-uid CENSYS_UID
                         Censys uid
   --censys-secret CENSYS_SECRET
@@ -84,6 +86,8 @@ Modules:
                         Censys dork used for search.
   --dork-fofa DORK_FOFA
                         Fofa dork used for search.
+  --dork-fofac DORK_FOFA
+                        Fofa dork used for search(uesd by fofa crawler).
   --max-page MAX_PAGE   Max page used in ZoomEye API(10 targets/Page).
   --search-type SEARCH_TYPE
                         search type used in ZoomEye API, web or host
@@ -121,12 +125,11 @@ Scan multiple targets given in a textual file
 $ python cli.py -r tests/poc_example.py -f url.txt --verify
 ```
 
-> Attack batch processing mode only need to replace the ```--verify``` as ``` --attack```.
+> Attack batch processing mode only need to replace the `--verify` as ` --attack`.
 
 **-r POCFILE**
 
 POCFILE can be a file or Seebug SSVID. pocsuite plugin can load poc codes from any where.
-
 
 ```
 $ python cli.py -r ssvid-97343 -u http://www.example.com --shell
@@ -168,47 +171,57 @@ $ python cli.py -r tests/ -f url.txt --verify --threads 10
 
 If you are a [**ZoomEye**](https://www.zoomeye.org/) user, The API is a cool and hackable interface. ex:
 
-Search redis server with ```port:6379``` and ```redis``` keyword.
-
+Search redis server with `port:6379` and `redis` keyword.
 
 ```
 $ python cli.py --dork 'port:6379' --vul-keyword 'redis' --max-page 2
 
 ```
+
 **--dork-shodan DORK**
 
- If you are a [**Shodan**](https://www.shodan.io/) user, The API is a cool and hackable interface. ex:
+If you are a [**Shodan**](https://www.shodan.io/) user, The API is a cool and hackable interface. ex:
 
- Search libssh server  with  `libssh` keyword.
+Search libssh server with `libssh` keyword.
 
- ```
- python3 cli.py -r pocs/libssh_auth_bypass.py --dork-shodan libssh --thread 10
- ```
+```
+python3 cli.py -r pocs/libssh_auth_bypass.py --dork-shodan libssh --thread 10
+```
 
 **--dork-fofa DORK**
 
- If you are a [**Fofa**](fofa) user, The API is a cool and hackable interface. ex:
+If you are a [**Fofa**](fofa) user, The API is a cool and hackable interface. ex:
 
- Search web server thinkphp with  `body="thinkphp"` keyword.
+Search web server thinkphp with `body="thinkphp"` keyword.
 
+```
+$ python3 cli.py -r pocs/check_http_status.py --dork-fofa 'body="thinkphp"' --search-type web  --thread 10
+```
 
- ```
- $ python3 cli.py -r pocs/check_http_status.py --dork-fofa 'body="thinkphp"' --search-type web  --thread 10
- ```
+**--dork-fofac DORK**
+
+Maybe you're a regular member, The API is a cool and hackable interface. ex:
+
+Search web server thinkphp with `body="thinkphp"` keyword.
+
+```
+$ python3 pocsuite3/cli.py -r pocsuite3/pocs/check_http_status.py --dork-fofac 'body="thinkphp"' --thread 10 --fofa-cookie 'e9b6337117b4e513a9ec4bb8b348ed9d'
+```
 
 If you have good ideas, please show them on your way.
 
 ## 常用命令
-	- pocsuite -u http://example.com -r example.py -v 2 # 基础用法 v2开启详细信息
 
-	- pocsuite -u http://example.com -r example.py -v 2 --shell # shell反连模式，基础用法 v2开启详细信息
+    - pocsuite -u http://example.com -r example.py -v 2 # 基础用法 v2开启详细信息
 
-	- pocsuite -r redis.py --dork service:redis --threads 20 # 从zoomeye搜索redis目标批量检测，线程设置为20
+    - pocsuite -u http://example.com -r example.py -v 2 --shell # shell反连模式，基础用法 v2开启详细信息
 
-	- pocsuite -u http://example.com --plugins poc_from_pocs,html_report # 加载poc目录下所有poc,并将结果保存为html
+    - pocsuite -r redis.py --dork service:redis --threads 20 # 从zoomeye搜索redis目标批量检测，线程设置为20
 
-	- pocsuite -f batch.txt --plugins poc_from_pocs,html_report # 从文件中加载目标，并使用poc目录下poc批量扫描
+    - pocsuite -u http://example.com --plugins poc_from_pocs,html_report # 加载poc目录下所有poc,并将结果保存为html
 
-	- pocsuite -u 10.0.0.0/24 -r example.py --plugins target_from_cidr # 加载CIDR目标
+    - pocsuite -f batch.txt --plugins poc_from_pocs,html_report # 从文件中加载目标，并使用poc目录下poc批量扫描
 
-	- pocsuite -u http://example.com -r ecshop_rce.py --attack --command "whoami" # ecshop poc中实现了自定义命令`command`,可以从外部参数传递。
+    - pocsuite -u 10.0.0.0/24 -r example.py --plugins target_from_cidr # 加载CIDR目标
+
+    - pocsuite -u http://example.com -r ecshop_rce.py --attack --command "whoami" # ecshop poc中实现了自定义命令`command`,可以从外部参数传递。

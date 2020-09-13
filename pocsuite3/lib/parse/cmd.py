@@ -91,12 +91,14 @@ def cmd_line_parser(argv=None):
         group.add_argument(
             "--fofa-token", dest="fofa_token", help="fofa token")
         group.add_argument(
+            "--fofa-cookie", dest="fofa_cookie", help="fofa cookie")
+        group.add_argument(
             "--censys-uid", dest="censys_uid", help="Censys uid")
         group.add_argument("--censys-secret",
                            dest="censys_secret", help="Censys secret")
         # Modules options
         modules = parser.add_argument_group(
-            "Modules", "Modules(Seebug、Zoomeye、CEye、Fofa、Google、Listener) options")
+            "Modules", "Modules(Seebug、Zoomeye、CEye、Fofa、Fofac、Google、Listener) options")
         modules.add_argument("--dork", dest="dork", action="store", default=None,
                              help="Zoomeye dork used for search.")
         modules.add_argument("--dork-zoomeye", dest="dork_zoomeye", action="store", default=None,
@@ -107,6 +109,8 @@ def cmd_line_parser(argv=None):
                              help="Censys dork used for search.")
         modules.add_argument("--dork-fofa", dest="dork_fofa", action="store", default=None,
                              help="Fofa dork used for search.")
+        modules.add_argument("--dork-fofac", dest="dork_fofac", action="store", default=None,
+                             help="Fofa dork used for search(crawler module).")
         modules.add_argument("--dork-google", dest="dork_google", action="store", default=None,
                              help="Google dork used for search.")
         modules.add_argument("--max-page", dest="max_page", type=int, default=1,
@@ -153,8 +157,7 @@ def cmd_line_parser(argv=None):
                     diy.add_argument(line)
 
         args = parser.parse_args()
-        if not any((args.url, args.url_file, args.update_all, args.plugins, args.dork, args.dork_shodan, args.dork_fofa, args.dork_google,
-                    args.dork_censys, args.dork_zoomeye, args.configFile, args.show_version)):
+        if not any((args.url, args.url_file, args.update_all, args.plugins, args.dork, args.dork_shodan, args.dork_fofa, args.dork_fofac, args.dork_google, args.dork_censys, args.dork_zoomeye, args.configFile, args.show_version)):
             err_msg = "missing a mandatory option (-u, --url-file, --update). "
             err_msg += "Use -h for basic and -hh for advanced help\n"
             parser.error(err_msg)
