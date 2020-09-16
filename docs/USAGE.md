@@ -225,3 +225,5 @@ If you have good ideas, please show them on your way.
     - pocsuite -u 10.0.0.0/24 -r example.py --plugins target_from_cidr # 加载CIDR目标
 
     - pocsuite -u http://example.com -r ecshop_rce.py --attack --command "whoami" # ecshop poc中实现了自定义命令`command`,可以从外部参数传递。
+
+    - python pocsuite3/cli.py -r pocsuite3/pocs/CVE-2020-15415.py --dork-fofa '(app="DrayTek-Vigor2960" || app="DrayTek-Vigor300B" || app="DrayTek-Vigor3900")"' --thread 10 --fofa-user 'doriantracy@protonmail.com' --fofa-token '' # 利用fofa批量扫描
