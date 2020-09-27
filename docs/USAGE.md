@@ -226,4 +226,5 @@ If you have good ideas, please show them on your way.
 
     - pocsuite -u http://example.com -r ecshop_rce.py --attack --command "whoami" # ecshop poc中实现了自定义命令`command`,可以从外部参数传递。
 
-    - python pocsuite3/cli.py -r pocsuite3/pocs/CVE-2020-15415.py --dork-fofa '(app="DrayTek-Vigor2960" || app="DrayTek-Vigor300B" || app="DrayTek-Vigor3900")"' --thread 10 --fofa-user 'doriantracy@protonmail.com' --fofa-token '' # 利用fofa批量扫描
+    - google-chrome --headless --disable-gpu --remote-debugging-port=9222 # 在使用fofac插件之前需要执行这条开启cdp
+    - python pocsuite3/cli.py -r pocsuite3/pocs/CVE-2020-15415.py --dork-fofa '(app="DrayTek-Vigor2960" || app="DrayTek-Vigor300B" || app="DrayTek-Vigor3900")"' --thread 10 --fofa-user 'doriantracy@protonmail.com' --fofa-cookie '' # 利用fofa批量扫描

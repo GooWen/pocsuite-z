@@ -80,7 +80,7 @@ class Fofac():
         except Exception as ex:
             logger.error(str(ex))
 
-    def search(self, dork, pages=20):
+    def search(self, dork, pages=100):
         search_result = set()
         # create a browser instance
         browser = pychrome.Browser(url="http://127.0.0.1:9222")
@@ -110,7 +110,7 @@ class Fofac():
         # 判断当前搜索结果有多少数据，来确定可以爬取数据的页数
         # print("length:", length['result']['value'])
         logger.info("Total: "+str(length['result']['value']))
-        logger.info("The current set of max crawler pages is 20.")
+        logger.info("The current set of max crawler pages is {}.".format(pages))
         if pages > 1000:
             pages = 1000
         if int(length['result']['value'].replace(",", ""))/10 <= pages:
