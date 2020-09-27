@@ -20,7 +20,10 @@ class TestPOC(POCBase):
     category = POC_CATEGORY.EXPLOITS.REMOTE
     version = '1.0'    # default version: 1.0
     references = ['']
-    desc = '''redis mongodb mongodb memcached elasticsearch zookeeper ftp CouchDB docker Hadoop --  Unauthorized Check'''
+    desc = '''
+    redis mongodb mongodb memcached elasticsearch zookeeper ftp CouchDB docker Hadoop --  Unauthorized Check
+    modify from https://github.com/cwkiller/unauthorized-check
+    '''
     vulDate = '2013-07-29'
     createDate = '2020-9-21'
     updateDate = '2020-9-21'
