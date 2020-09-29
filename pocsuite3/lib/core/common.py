@@ -83,13 +83,19 @@ def set_paths(root_path):
     """
     paths.POCSUITE_ROOT_PATH = root_path
     paths.POCSUITE_DATA_PATH = os.path.join(paths.POCSUITE_ROOT_PATH, "data")
-    paths.POCSUITE_PLUGINS_PATH = os.path.join(paths.POCSUITE_ROOT_PATH, "plugins")
+    paths.POCSUITE_PLUGINS_PATH = os.path.join(
+        paths.POCSUITE_ROOT_PATH, "plugins")
     paths.POCSUITE_POCS_PATH = os.path.join(paths.POCSUITE_ROOT_PATH, "pocs")
     paths.USER_POCS_PATH = None
 
-    paths.USER_AGENTS = os.path.join(paths.POCSUITE_DATA_PATH, "user-agents.txt")
-    paths.WEAK_PASS = os.path.join(paths.POCSUITE_DATA_PATH, "password-top100.txt")
-    paths.LARGE_WEAK_PASS = os.path.join(paths.POCSUITE_DATA_PATH, "password-top1000.txt")
+    paths.USER_AGENTS = os.path.join(
+        paths.POCSUITE_DATA_PATH, "user-agents.txt")
+    paths.WEAK_PASS = os.path.join(
+        paths.POCSUITE_DATA_PATH, "password-top100.txt")
+    paths.LARGE_WEAK_PASS = os.path.join(
+        paths.POCSUITE_DATA_PATH, "password-top1000.txt")
+    paths.FOFA_CMS_RULE = os.path.join(
+        paths.POCSUITE_DATA_PATH, "fofacms.json")
 
     paths.POCSUITE_HOME_PATH = os.path.expanduser("~")
     _ = os.path.join(paths.POCSUITE_HOME_PATH, ".pocsuite")
@@ -101,9 +107,12 @@ def set_paths(root_path):
     paths.POCSUITE_CONSOLE_HISTORY = os.path.join(_, "console.hst")
 
     paths.POCSUITE_TMP_PATH = os.path.join(_, "tmp")
-    paths.POCSUITE_RC_PATH = os.path.join(paths.POCSUITE_HOME_PATH, ".pocsuiterc")
-    paths.POCSUITE_OUTPUT_PATH = paths.get("POCSUITE_OUTPUT_PATH", os.path.join(_, "output"))
-    paths.SHELLCODES_DEV_PATH = os.path.join(paths.POCSUITE_ROOT_PATH, "shellcodes", "tools")
+    paths.POCSUITE_RC_PATH = os.path.join(
+        paths.POCSUITE_HOME_PATH, ".pocsuiterc")
+    paths.POCSUITE_OUTPUT_PATH = paths.get(
+        "POCSUITE_OUTPUT_PATH", os.path.join(_, "output"))
+    paths.SHELLCODES_DEV_PATH = os.path.join(
+        paths.POCSUITE_ROOT_PATH, "shellcodes", "tools")
 
 
 def banner():
@@ -194,10 +203,12 @@ def get_latest_revision():
     """
 
     ret = None
-    resp = requests.get(url="https://raw.githubusercontent.com/knownsec/pocsuite3/master/pocsuite3/__init__.py")
+    resp = requests.get(
+        url="https://raw.githubusercontent.com/knownsec/pocsuite3/master/pocsuite3/__init__.py")
     try:
         content = resp.content
-        ret = extract_regex_result(r"__version__\s*=\s*[\"'](?P<result>[\d.]+)", content)
+        ret = extract_regex_result(
+            r"__version__\s*=\s*[\"'](?P<result>[\d.]+)", content)
     except Exception:
         pass
 
@@ -220,9 +231,11 @@ def poll_process(process, suppress_errors=False):
                 if return_code == 0:
                     data_to_stdout(" done\n")
                 elif return_code < 0:
-                    data_to_stdout(" process terminated by signal {}\n".format(return_code))
+                    data_to_stdout(
+                        " process terminated by signal {}\n".format(return_code))
                 elif return_code > 0:
-                    data_to_stdout(" quit unexpectedly with return code {}\n".format(return_code))
+                    data_to_stdout(
+                        " quit unexpectedly with return code {}\n".format(return_code))
 
             break
 
@@ -365,7 +378,8 @@ def get_file_items(filename, comment_prefix='#', unicode_=True, lowercase=False,
 
     except (IOError, OSError, MemoryError) as ex:
         err_msg = "something went wrong while trying "
-        err_msg += "to read the content of file '{0}' ('{1}')".format(filename, ex)
+        err_msg += "to read the content of file '{0}' ('{1}')".format(
+            filename, ex)
         raise PocsuiteSystemException(err_msg)
 
     return ret if not unique else ret.keys()
@@ -546,7 +560,8 @@ def get_objective_code(asm_file, target_arch, debug=0):
             if debug:
                 print("app: '%s' found at %s" % (app, find_app))
         else:
-            print("You must install app: '%s' and maybe edit environment variables path to it" % app)
+            print(
+                "You must install app: '%s' and maybe edit environment variables path to it" % app)
             return None
     elif OS_SYSTEM == OS.LINUX:
         find_app = app
@@ -586,7 +601,8 @@ def objdump(obj_file, os_target_arch, debug=0):
                 if debug:
                     print("app: '%s' found at %s" % (app, find_app))
             else:
-                print("You must install app: '%s' and maybe edit environment variables path to it" % app)
+                print(
+                    "You must install app: '%s' and maybe edit environment variables path to it" % app)
                 return None
         elif OS_SYSTEM == OS.LINUX:
             find_app = app
@@ -595,9 +611,11 @@ def objdump(obj_file, os_target_arch, debug=0):
             return None
 
         if os_target_arch == OS_ARCH.X86:
-            p = Popen(['%s' % find_app, '-d', obj_file], stdout=PIPE, stderr=PIPE)
+            p = Popen(['%s' % find_app, '-d', obj_file],
+                      stdout=PIPE, stderr=PIPE)
         elif os_target_arch == OS_ARCH.X64:
-            p = Popen(['%s' % find_app, '-d', obj_file, '--disassembler-options=addr64'], stdout=PIPE, stderr=PIPE)
+            p = Popen(['%s' % find_app, '-d', obj_file,
+                       '--disassembler-options=addr64'], stdout=PIPE, stderr=PIPE)
         else:
             print("OS TARGET ARCH '%s' is not supported" % os_target_arch)
             return
@@ -638,7 +656,8 @@ def create_shellcode(asm_code, os_target, os_target_arch, make_exe=0, debug=0, f
     if make_exe:
         make_binary_from_obj(obj_file, os_target, os_target_arch, debug)
     if dll_inj_funcs:
-        generate_dll(os_target, os_target_arch, asm_code, filename, dll_inj_funcs, debug)
+        generate_dll(os_target, os_target_arch, asm_code,
+                     filename, dll_inj_funcs, debug)
     return shellcode, asm_file.split(".")[0]
 
 
@@ -675,7 +694,8 @@ def make_binary_from_obj(o_file, os_target, os_target_arch, debug=0, is_dll=Fals
             if debug:
                 print("app: '%s' found at %s" % (app, find_app))
         else:
-            print("You must install app: '%s' and maybe edit environment variables path to it" % app)
+            print(
+                "You must install app: '%s' and maybe edit environment variables path to it" % app)
             return None
     elif OS_SYSTEM == OS.LINUX:
         find_app = app
@@ -805,9 +825,12 @@ def index_modules() -> list:
 
     modules = []
     for root, dirs, files in os.walk(paths.POCSUITE_POCS_PATH):
-        _, package, root = root.rpartition("pocsuite3/pocs/".replace("/", os.sep))
-        files = filter(lambda x: not x.startswith("__") and x.endswith(".py"), files)
-        modules.extend(map(lambda x: os.sep.join((root, os.path.splitext(x)[0])), files))
+        _, package, root = root.rpartition(
+            "pocsuite3/pocs/".replace("/", os.sep))
+        files = filter(lambda x: not x.startswith(
+            "__") and x.endswith(".py"), files)
+        modules.extend(map(lambda x: os.sep.join(
+            (root, os.path.splitext(x)[0])), files))
 
     return modules
 

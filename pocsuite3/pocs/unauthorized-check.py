@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import socket
 import pymongo
-import requests
 import ftplib
 from urllib.parse import urlparse
 from pocsuite3.api import requests
